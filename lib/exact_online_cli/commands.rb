@@ -21,6 +21,18 @@ end
 
 module ExactOnlineCli
 
+  class Account < Thor
+
+  end
+
+  class Contact < Thor
+
+  end
+
+  class TimeTransaction < Thor
+
+  end
+
   class Project < Thor
 
     desc "list", "list all projects"
@@ -37,6 +49,26 @@ module ExactOnlineCli
         print "\n"
       end
 
+    end
+
+    desc "add [CODE] [ACCOUNTID] [DESCRIPTION] [TYPE]", "new project: enter account, search code, "
+    def add(code, account_id, description, type)
+      #Project Types
+      # :type=>2,
+      # :type_description=>"Fixed price",
+      # :type=>3,
+      # :type_description=>"Time and Material",
+      # :type=>4,
+      # :type_description=>"Non billable",
+      # :type=>5,
+      # :type_description=>"Prepaid",
+
+#      ./bin/eo project add "PROJ9023xx" "8d87c8c5-f1c6-495c-b6af-d5ba396873b5" "Great project" "2"
+      ExactOnlineApi.init_exact_online
+
+      #project = Elmas::Project.new(code: "PROJ902", description: "Great project", account: "8d87c8c5-f1c6-495c-b6af-d5ba396873b5", type: 2 )
+      project = Elmas::Project.new(code: code, description: description, account: account_id, type: type )
+      project.save
     end
 
     desc "search", "search projects by keyword"
@@ -63,8 +95,6 @@ module ExactOnlineCli
     subcommand "project", Project
 
     private
-
-
 
   end
 end
