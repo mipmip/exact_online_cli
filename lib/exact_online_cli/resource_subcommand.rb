@@ -14,6 +14,16 @@ module ExactOnlineCli
       end
     end
 
+    desc "list", "list all"
+    def list
+      list_object(@default_list_columns)
+    end
+
+    desc "listdev", "list all developer mode"
+    def listdev
+      listdev_object
+    end
+
     private
 
     def list_object(columns=[])

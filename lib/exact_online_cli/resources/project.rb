@@ -14,16 +14,6 @@ module ExactOnlineCli
       @default_list_columns = ['id', 'code', 'description']
     end
 
-    desc "list", "list all projects"
-    def list
-      list_object(@default_list_columns)
-    end
-
-    desc "listdev", "list all accounts"
-    def listdev
-      listdev_object
-    end
-
     # ./bin/eo project add "PROJ9023xx" "8d87c8c5-f1c6-495c-b6af-d5ba396873b5" "Great project" "2"
     desc "add [CODE] [ACCOUNTID] [DESCRIPTION] [TYPE]", "new project: enter account, search code, "
     def add(code, account_id, description, type)
