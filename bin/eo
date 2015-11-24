@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'thor'
+require 'exact_online_cli/commands'
+
+ExactOnlineCli::Commands.start(ARGV)
+
+
