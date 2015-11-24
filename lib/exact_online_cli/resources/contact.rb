@@ -1,5 +1,9 @@
 module ExactOnlineCli
   class Contact < ExactOnlineCli::ResourceSubcommand
+
+    @plural = 'contacts'
+    include ResourceSubcommandInclude
+
     def initialize(*args)
       super
       @elmas_class = 'Elmas::Contact'

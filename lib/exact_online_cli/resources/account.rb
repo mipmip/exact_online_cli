@@ -1,6 +1,9 @@
 module ExactOnlineCli
   class Account < ExactOnlineCli::ResourceSubcommand
 
+    @plural = 'accounts'
+    include ResourceSubcommandInclude
+
     def initialize(*args)
       super
       @elmas_class = 'Elmas::Account'

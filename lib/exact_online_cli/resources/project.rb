@@ -1,6 +1,9 @@
 module ExactOnlineCli
   class Project < ExactOnlineCli::ResourceSubcommand
 
+    @plural = 'projects'
+    include ResourceSubcommandInclude
+
     PRODUCT_TYPE = {
       :fixed_price => 2,
       :time_and_material => 3,

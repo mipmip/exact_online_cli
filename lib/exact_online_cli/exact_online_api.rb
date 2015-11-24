@@ -1,3 +1,4 @@
+# Exact Online Api connection class
 class ExactOnlineApi
   def self.init_exact_online
     Elmas.configure do |config|
