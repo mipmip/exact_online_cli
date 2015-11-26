@@ -24,11 +24,6 @@ module ExactOnlineCli
       add_object(data)
     end
 
-    desc "search", "search projects by keyword"
-    def search(keyword)
-
-    end
-
     desc "types", "list project types"
     def types
       PRODUCT_TYPE.each do | k,v |

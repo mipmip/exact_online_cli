@@ -16,7 +16,9 @@ require "exact_online_cli/resources/contact"
 module ExactOnlineCli
 
   class Commands < Thor
-    #class_option :verbose, :desc => 'Be more verbose', :type => :boolean, :aliases => '-v'
+    class_option :verbose, :desc => 'Be more verbose', :type => :boolean, :aliases => '-v'
+    class_option :columns, :desc => 'list with columns to select', :type => :string, :aliases => '-c'
+    class_option :filter, :desc => 'filter on column', :type => :string, :aliases => '-f'
 
     def initialize(*args)
       super
