@@ -59,6 +59,30 @@ module ResourceSubcommandInclude
         columns = cols_to_list(options['columns']) || @default_list_columns
         json_list_object(columns)
       end
+
+      desc "add_with_json [JSON_DATA]", "Add #{@plural} with data in json"
+      long_desc <<-LONGDESC
+      Add one or more Exact Online #{@plural} with data feeded in json format.
+
+      Below an example with projects. Similar works for all Exact Online Resources.
+
+      eo project jsonlist -f "id=df22dbf9-ba7a-4eb3-a5e0-2ca2f4a03f15" -c "account,code,description,type" | sed "s/P001/`uuidgen | cut -d'-' -f 1`/" | eo project add_with_json -s
+      LONGDESC
+      def add_with_json(data=nil)
+        if(options['stdin'])
+          json_data = $stdin.read
+        elsif data
+          json_data= data || $stdin.read
+        else
+          raise 'ERROR: "eo add_with_json" was called with no arguments'
+        end
+
+        JSON.parse(json_data).each do | entry |
+          add_object(entry)
+        end
+      end
+
+
     end
 
     private

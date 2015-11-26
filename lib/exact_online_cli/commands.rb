@@ -21,6 +21,7 @@ module ExactOnlineCli
     class_option :columns, :desc => 'list with columns to select', :type => :string, :aliases => '-c'
     class_option :filter, :desc => 'filter on column', :type => :string, :aliases => '-f'
     class_option :yaml_conf, :desc => 'path to yaml file with configuration', :type => :string, :aliases => '-y'
+    class_option :stdin, :desc => 'read stdin, use with pipes', :type => :boolean, :aliases => '-s'
 
     def initialize(*args)
       super
