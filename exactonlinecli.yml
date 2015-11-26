@@ -1,0 +1,5 @@
+# This is the configuration file for the exact online cli tool
+client_id: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+client_secret: xxxxxxxxxxxx
+username: xxxxxxxxx
+password: xxxxxxxxx
