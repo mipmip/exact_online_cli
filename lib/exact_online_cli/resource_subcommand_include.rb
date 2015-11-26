@@ -15,7 +15,7 @@ module ResourceSubcommandInclude
         end
       end
 
-      desc "devlist", "dev mode list all #{@plural}"
+      desc "devlist", "Dev mode list all #{@plural}"
       long_desc <<-LONGDESC
       List records in Exact Online #{@plural} in a indented array.
       LONGDESC
@@ -23,7 +23,7 @@ module ResourceSubcommandInclude
         listdev_object
       end
 
-      desc "list", "list all #{@plural}"
+      desc "list", "List all #{@plural}"
       long_desc <<-LONGDESC
       List records in Exact Online #{@plural}.
 
@@ -49,7 +49,7 @@ module ResourceSubcommandInclude
         list_object
       end
 
-      desc "jsonlist", "list all #{@plural} to json"
+      desc "jsonlist", "List all #{@plural} to json"
       long_desc <<-LONGDESC
       List records in Exact Online #{@plural} in json format.
       See eo project help list for instructions how to use the options.
@@ -103,13 +103,13 @@ module ResourceSubcommandInclude
     #### Exact communicate
 
     def add_object(data)
-      ExactOnlineApi.init_exact_online
+      ExactOnlineApi.init_exact_online(@conf)
       instance = Object.const_get(@elmas_class).new(data)
       instance.save
     end
 
     def object_find_all_old
-      ExactOnlineApi.init_exact_online
+      ExactOnlineApi.init_exact_online(@conf)
       instance = Object.const_get(@elmas_class).new
       instance.find_all
     end
@@ -117,7 +117,7 @@ module ResourceSubcommandInclude
     def object_find_all
 
       filter = prepare_filter(options['filter'])
-      ExactOnlineApi.init_exact_online
+      ExactOnlineApi.init_exact_online(@conf)
 
       if filter
         instance = Object.const_get(@elmas_class).new(filter[0])

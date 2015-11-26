@@ -1,4 +1,5 @@
 require 'elmas'
+require 'yaml'
 require 'text-table'
 require 'csv'
 require 'json'
@@ -19,27 +20,36 @@ module ExactOnlineCli
     class_option :verbose, :desc => 'Be more verbose', :type => :boolean, :aliases => '-v'
     class_option :columns, :desc => 'list with columns to select', :type => :string, :aliases => '-c'
     class_option :filter, :desc => 'filter on column', :type => :string, :aliases => '-f'
+    class_option :yaml_conf, :desc => 'path to yaml file with configuration', :type => :string, :aliases => '-y'
 
     def initialize(*args)
       super
+
       #@verbose = true if options[:verbose]
     end
 
-    desc "version", "display version"
+    desc "version", "Display version"
     def version
       print ExactOnlineCli::VERSION + "\n"
     end
 
-    desc "project SUBCOMMAND ...ARGS", "manage Exact Online projects"
+    desc "init", "Create ~/.exactonlinecli.yml"
+    def init
+      source_file = File.join(File.expand_path('../../..', __FILE__),'exactonlinecli.yml')
+      dest_file = File.join(ENV['HOME'],'.exactonlinecli.yml')
+      FileUtils.cp(source_file, dest_file)
+    end
+
+    desc "project SUBCOMMAND ...ARGS", "Manage Exact Online projects"
     subcommand "project", Project
 
-    desc "account SUBCOMMAND ...ARGS", "manage Exact Online accounts"
+    desc "account SUBCOMMAND ...ARGS", "Manage Exact Online accounts"
     subcommand "account", Account
 
-    desc "time SUBCOMMAND ...ARGS", "manage Exact Online time transactions"
+    desc "time SUBCOMMAND ...ARGS", "Manage Exact Online time transactions"
     subcommand "time", TimeTransaction
 
-    desc "contact SUBCOMMAND ...ARGS", "manage Exact Online contacts"
+    desc "contact SUBCOMMAND ...ARGS", "Manage Exact Online contacts"
     subcommand "contact", Contact
 
     private
