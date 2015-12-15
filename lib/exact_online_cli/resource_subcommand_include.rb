@@ -34,15 +34,15 @@ module ResourceSubcommandInclude
 
       # list all project with these columns:
 
-      eo project list -c "id, code, description, account, type"
+      eo projects list -c "id, code, description, account, type"
 
-      # list all project with fixed_price ($ eo project types)
+      # list all project with fixed_price ($ eo projects types)
 
-      eo project list -f "type=2"
+      eo projects list -f "type=2"
 
       # list project with given unique id showing the linked account id
 
-      eo project list -f "id=df22dbf9-ba7a-4eb3-a5e0-2ca2f4a03f15" -c "account"
+      eo projects list -f "id=df22dbf9-ba7a-4eb3-a5e0-2ca2f4a03f15" -c "account"
 
       LONGDESC
       def list
@@ -52,7 +52,7 @@ module ResourceSubcommandInclude
       desc "jsonlist", "List all #{@plural} to json"
       long_desc <<-LONGDESC
       List records in Exact Online #{@plural} in json format.
-      See eo project help list for instructions how to use the options.
+      See eo projects help list for instructions how to use the options.
 
       LONGDESC
       def jsonlist
@@ -66,7 +66,7 @@ module ResourceSubcommandInclude
 
       Below an example with projects. Similar works for all Exact Online Resources.
 
-      eo project jsonlist -f "id=df22dbf9-ba7a-4eb3-a5e0-2ca2f4a03f15" -c "account,code,description,type" | sed "s/P001/`uuidgen | cut -d'-' -f 1`/" | eo project add_with_json -s
+      eo projects jsonlist -f "id=df22dbf9-ba7a-4eb3-a5e0-2ca2f4a03f15" -c "account,code,description,type" | sed "s/P001/`uuidgen | cut -d'-' -f 1`/" | eo projects add_with_json -s
       LONGDESC
       def add_with_json(data=nil)
         if(options['stdin'])
@@ -82,6 +82,23 @@ module ResourceSubcommandInclude
         end
       end
 
+      desc "delete [ID]", "Delete #{@plural} with given ID"
+      long_desc <<-LONGDESC
+      Delete #{@plural} which has ID
+
+      Below an example with projects. Similar works for all Exact Online Resources.
+
+      eo projects delete df22dbf9-ba7a-4eb3-a5e0-2ca2f4a03f15
+      LONGDESC
+      def delete(id=nil)
+        if id
+          delid = id || $stdin.read
+        else
+          raise 'ERROR: "eo delete" was called with no arguments'
+        end
+
+        del_object(delid)
+      end
 
     end
 
@@ -104,8 +121,18 @@ module ResourceSubcommandInclude
     end
 
     #### util methods
+    def all_attributes
+      out = object_find_all
+      cols = []
+      out[0].attributes.keys.each do |k|
+        cols << "#{k.to_s}\n"
+      end
+    end
+
     def cols_to_list columns
-      if columns
+      if(options['all_columns'])
+        all_attributes
+      elsif columns
         cols = []
         columns.split(',').each do | c |
           cols << c.strip
@@ -130,6 +157,12 @@ module ResourceSubcommandInclude
       ExactOnlineApi.init_exact_online(@conf)
       instance = Object.const_get(@elmas_class).new(data)
       instance.save
+    end
+
+    def del_object(data)
+      ExactOnlineApi.init_exact_online(@conf)
+      instance = Object.const_get(@elmas_class).new({id:data})
+      instance.delete
     end
 
     def object_find_all_old

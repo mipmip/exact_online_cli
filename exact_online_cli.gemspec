@@ -23,6 +23,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov", "~> 0.10"
   spec.add_development_dependency "minitest", "~> 5.1"
 
+  spec.add_development_dependency "nokogiri"
+  spec.add_development_dependency "exact_online_apidoc_parser"
+
   spec.add_runtime_dependency "thor", "~> 0.19"
   spec.add_runtime_dependency "elmas"
   spec.add_runtime_dependency "text-table", "~> 1.2"

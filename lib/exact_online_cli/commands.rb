@@ -22,6 +22,7 @@ module ExactOnlineCli
   class Commands < Thor
     class_option :verbose, :desc => 'Be more verbose', :type => :boolean, :aliases => '-v'
     class_option :columns, :desc => 'list with columns to select', :type => :string, :aliases => '-c'
+    class_option :all_columns, :desc => 'all columns', :type => :string, :aliases => '-C'
     class_option :filter, :desc => 'filter on column', :type => :string, :aliases => '-f'
     class_option :yaml_conf, :desc => 'path to yaml file with configuration', :type => :string, :aliases => '-y'
     class_option :stdin, :desc => 'read stdin, use with pipes', :type => :boolean, :aliases => '-s'
