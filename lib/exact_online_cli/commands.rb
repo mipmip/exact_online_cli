@@ -9,7 +9,10 @@ require "exact_online_cli/exact_online_api"
 require "exact_online_cli/output"
 require "exact_online_cli/resource_subcommand"
 require "exact_online_cli/resource_subcommand_include"
-require "exact_online_cli/resources/project"
+
+require "exact_online_cli/all_gen_resources"
+
+require "exact_online_cli/resources/projects"
 require "exact_online_cli/resources/account"
 require "exact_online_cli/resources/time_transaction"
 require "exact_online_cli/resources/contact"
@@ -41,17 +44,7 @@ module ExactOnlineCli
       FileUtils.cp(source_file, dest_file)
     end
 
-    desc "project SUBCOMMAND ...ARGS", "Manage Exact Online projects"
-    subcommand "project", Project
-
-    desc "account SUBCOMMAND ...ARGS", "Manage Exact Online accounts"
-    subcommand "account", Account
-
-    desc "time SUBCOMMAND ...ARGS", "Manage Exact Online time transactions"
-    subcommand "time", TimeTransaction
-
-    desc "contact SUBCOMMAND ...ARGS", "Manage Exact Online contacts"
-    subcommand "contact", Contact
+    require "exact_online_cli/sub_commands"
 
     private
 

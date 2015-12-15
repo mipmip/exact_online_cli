@@ -1,0 +1,16 @@
+module ExactOnlineCli
+
+  class Commands < Thor
+    desc "project SUBCOMMAND ...ARGS", "Manage Exact Online projects"
+    subcommand "project", Projects
+
+    desc "account SUBCOMMAND ...ARGS", "Manage Exact Online accounts"
+    subcommand "account", Account
+
+    desc "time SUBCOMMAND ...ARGS", "Manage Exact Online time transactions"
+    subcommand "time", TimeTransaction
+
+    desc "contact SUBCOMMAND ...ARGS", "Manage Exact Online contacts"
+    subcommand "contact", Contact
+  end
+end

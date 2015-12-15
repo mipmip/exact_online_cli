@@ -1,0 +1,11 @@
+module ExactOnlineCli
+
+  class Commands < Thor
+    <% resources.each do | res | %>
+      <% unless res['end_point'].to_s == '' %>
+    desc "<%= res['end_point'].underscore %> SUBCOMMAND ...ARGS", "Manage Exact Online <%= res['end_point'] %>"
+    subcommand "<%= res['end_point'].underscore %>", <%= res['end_point'] %>
+      <% end %>
+    <% end %>
+  end
+end

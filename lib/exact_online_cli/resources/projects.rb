@@ -1,5 +1,5 @@
 module ExactOnlineCli
-  class Project < ExactOnlineCli::ResourceSubcommand
+  class Projects < ExactOnlineCli::ResourceSubcommand
 
     @plural = 'projects'
     include ResourceSubcommandInclude
@@ -13,7 +13,7 @@ module ExactOnlineCli
 
     def initialize(*args)
       super
-      @elmas_class = 'Elmas::Project'
+      @elmas_class = 'Elmas::Projects'
       @default_list_columns = ['id', 'code', 'description']
     end
 
