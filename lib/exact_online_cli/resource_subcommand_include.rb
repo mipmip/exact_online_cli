@@ -82,6 +82,30 @@ module ResourceSubcommandInclude
         end
       end
 
+      desc "edit_with_json [ID][JSON_DATA]", "Edit #{@plural} with data in json"
+      long_desc <<-LONGDESC
+      Edit one Exact Online #{@plural} with data feeded in json format.
+
+      Below an example with projects. Similar works for all Exact Online Resources.
+
+      eo projects jsonlist -f "id=df22dbf9-ba7a-4eb3-a5e0-2ca2f4a03f15" -c "account,code,description,type" | sed "s/P001/`uuidgen | cut -d'-' -f 1`/" | eo projects edit_with_json -s
+      LONGDESC
+      def edit_with_json(id, data=nil)
+
+        raise 'ERROR: "eo edit_with_json" was called with no ID' unless id
+
+        if(options['stdin'])
+          json_data = $stdin.read
+        elsif data
+          json_data= data || $stdin.read
+        else
+          raise 'ERROR: "eo edit_with_json" was called with no arguments'
+        end
+
+        edit_object(id, JSON.parse(json_data))
+
+      end
+
       desc "delete [ID]", "Delete #{@plural} with given ID"
       long_desc <<-LONGDESC
       Delete #{@plural} which has ID
@@ -94,7 +118,7 @@ module ResourceSubcommandInclude
         if id
           delid = id || $stdin.read
         else
-          raise 'ERROR: "eo delete" was called with no arguments'
+          raise 'ERROR: "eo delete" was called with no ID'
         end
 
         del_object(delid)
@@ -163,6 +187,13 @@ module ResourceSubcommandInclude
       ExactOnlineApi.init_exact_online(@conf)
       instance = Object.const_get(@elmas_class).new({id:data})
       instance.delete
+    end
+
+    def edit_object(id,data)
+      data['id']=id
+      ExactOnlineApi.init_exact_online(@conf)
+      instance = Object.const_get(@elmas_class).new(data)
+      instance.save
     end
 
     def object_find_all_old
